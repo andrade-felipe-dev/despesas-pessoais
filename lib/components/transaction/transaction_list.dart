@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 import '../../models/transaction.dart';
+import './transaction_card.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
@@ -41,57 +40,10 @@ class TransactionList extends StatelessWidget {
             itemCount: transactions.length,
             itemBuilder: (context, index) {
               final tr = transactions[index];
-              return Card(
-                elevation: 5,
-                margin: EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 5,
-                ),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    child: Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: FittedBox(
-                        child: Text('R\$${tr.value.toStringAsFixed(2)}'),
-                      ),
-                    ),
-                  ),
-                  title: Text(
-                    tr.title,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  subtitle: Text(
-                    DateFormat('dd/MM/y').format(tr.date),
-                  ),
-                  trailing: MediaQuery.of(context).size.width > 400
-                      ? TextButton(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.1,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Icon(
-                                  Icons.delete,
-                                  color: Colors.grey,
-                                ),
-                                Text(
-                                  'Excluir',
-                                  style: TextStyle(color: Colors.grey),
-                                )
-                              ],
-                            ),
-                          ),
-                          onPressed: () => onRemove(tr.id),
-                        )
-                      : IconButton(
-                          icon: Icon(Icons.delete),
-                          color: Colors.grey,
-                          onPressed: () => onRemove(tr.id),
-                        ),
-                ),
-              );
+              return transaction_card(tr: tr, onRemove: onRemove);
             },
           );
   }
 }
+
+
